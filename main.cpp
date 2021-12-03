@@ -10,6 +10,7 @@ Purpose: executes the computation of the SDV voxel grid for the selected interes
 
 #include <chrono>
 #include <pcl/io/ply_io.h>
+#include <boost/filesystem.hpp>
 #include "core/core.h"
 
 
