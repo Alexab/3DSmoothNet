@@ -36,13 +36,24 @@ def draw_registration_result(source, target, transformation):
 def execute_global_registration(
         source_down, target_down, reference_desc, target_desc, distance_threshold):
 
+#    result = open3d.pipelines.registration.registration_ransac_based_on_feature_matching(
+#            source_down, target_down, reference_desc, target_desc,
+#            True, distance_threshold)
+
     result = open3d.pipelines.registration.registration_ransac_based_on_feature_matching(
             source_down, target_down, reference_desc, target_desc,
-            distance_threshold, False,
+            True, distance_threshold,
             open3d.pipelines.registration.TransformationEstimationPointToPoint(False), 4,
-            [open3d.pipelines.registration.CorrespondenceCheckerBasedOnEdgeLength(0.9),
-            open3d.pipelines.registration.CorrespondenceCheckerBasedOnDistance(distance_threshold)],
-            open3d.pipelines.registration.RANSACConvergenceCriteria(4000000, 500))
+            checkers=[],
+            criteria=open3d.pipelines.registration.RANSACConvergenceCriteria(4000000))
+
+#    result = open3d.pipelines.registration.registration_ransac_based_on_feature_matching(
+#            source_down, target_down, reference_desc, target_desc,
+#            False, distance_threshold,
+#            open3d.pipelines.registration.TransformationEstimationPointToPoint(False), 4,
+#            [open3d.pipelines.registration.CorrespondenceCheckerBasedOnEdgeLength(0.9),
+#            open3d.pipelines.registration.CorrespondenceCheckerBasedOnDistance(distance_threshold)],
+#            open3d.pipelines.registration.RANSACConvergenceCriteria(4000000, 500))
     return result
 
 def refine_registration(source, target, source_fpfh, target_fpfh, voxel_size):
